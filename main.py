@@ -12,8 +12,6 @@ queue = []
 
 
 scheduler = BackgroundScheduler(daemon=True)
-scheduler.add_job(lambda: queue.append(randint(0,100)), 'interval', seconds=5)
-
 
 @app.route("/")
 @app.route("/start-jobs", methods=["POST"])
@@ -39,14 +37,31 @@ def get_jobs():
     return json.dumps(jobs)
 
 
-@app.route("/jobs/{job_id}/instances", methods=["GET"])
+@app.route("/jobs/<job_id>", methods=["GET"])
 def get_job_instance(job_id):
-    return "to do"
+    job = scheduler.get_job(job_id=job_id)
+    return json.dumps(job)
 
 
 @app.route("/add-job", methods=["POST"])
-def add_to_queue():
-    print(request.get_json())
-    return "noodles"
+def add_job():
+    job = scheduler.add_job(lambda: queue.append(randint(0, 100)), 'interval', seconds=5)
+    return json.dumps(job)
+
+
+@app.route("/state", methods=["POST"])
+def change_state():
+    state = request.json["state"]
+    if state == "pause":
+        scheduler.pause()
+    elif state == "shutdown":
+        scheduler.shutdown()
+    elif state == "start":
+        scheduler.start()
+    else:
+        return "no", 400
+
+    return json.dumps(scheduler.state())
+
 
 

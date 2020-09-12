@@ -32,7 +32,8 @@ automated backups
 
 ---
 
-## Use case: intervallic scheduling 
+
+![ct](crontab.png)
 
 
 ---
