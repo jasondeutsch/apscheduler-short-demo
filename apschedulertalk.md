@@ -68,18 +68,6 @@ What's wrong here?
 ---
 
 
-
-```
-while True:
-    cmd = input()
-    if cmd == 'x':
-        scheduler.shutdown()
-        break
-```
-
----
-
-
 This is essentially the same as BlockScheduler
 
 
@@ -95,6 +83,25 @@ This is essentially the same as BlockScheduler
 
 <em><small>source: https://enqueuezero.com/concrete-architecture/apscheduler.html</small></em>
 
+---
+
+# Job
+
+Jobs contain a functoin, parameters for execution, and scheduling paramters.
+The scheduling parameters are for controlling scheduler behaviors.
+
+---
+
+# Trigger
+
+All jobs have their own triggers. Triggers determine when the next time a given job should run. 
+
+---
+
+# Scheduler
+
+The scheduler is the master coordinator. It manages the execture and the job store. There are a number of subclasses for specific use.
+
 
 ---
 
@@ -106,10 +113,19 @@ Offers a couple of scheduling schemes:
 2. interval based
 3. One off/delayed execution
 
-### Trigger
+---
+
+# JobStore
+JobStore houses the scheduled jobs. Saved in memory by default. You can supply other persitence sources such as Mongo, Redis, etc...
+
+
+---
+
+# Executor
+Executors run the jobs. They manage the life cycles of jobs. By default, you can use thread or process as executors.
 
 
 
-(back to code)
+---
 
-let's use a simple 
+see main.py
