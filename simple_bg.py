@@ -1,6 +1,5 @@
-from apscheduler.schedulers.background import BlockingScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 scheduler = BlockingScheduler(daemon=True)
-scheduler.add_job(lambda: scheduler.print_jobs(), 'interval', seconds=5)
+scheduler.add_job(lambda: scheduler.print_jobs(), 'interval', seconds=2)
 scheduler.start()
-
